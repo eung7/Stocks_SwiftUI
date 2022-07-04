@@ -23,7 +23,9 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
+        let filteredStocks = stockListVM.searchTerm.isEmpty ? stockListVM.stocks : stockListVM.stocks.filter { $0.symbol.starts(with: stockListVM.searchTerm) }
+        
+        return NavigationView {
             ZStack(alignment: .leading) {
                 Color.black
                     .edgesIgnoringSafeArea(.all)
@@ -37,7 +39,7 @@ struct ContentView: View {
                 
                 SearchView(searchTerm: $stockListVM.searchTerm)
                     
-                StockListView(stocks: stockListVM.stocks)
+                StockListView(stocks: filteredStocks)
                 }
             }
                 .navigationTitle("Stocks")
