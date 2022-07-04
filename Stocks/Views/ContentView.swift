@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var searchTerm: String = ""
+    @ObservedObject private var stockListVM = StockListViewModel()
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -18,8 +18,8 @@ struct ContentView: View {
         ]
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
-        UITableView.appearance().backgroundColor = UIColor.black
-        UITableViewCell.appearance().backgroundColor = UIColor.black
+        
+        stockListVM.load()
     }
     
     var body: some View {
@@ -27,16 +27,18 @@ struct ContentView: View {
             ZStack(alignment: .leading) {
                 Color.black
                     .edgesIgnoringSafeArea(.all)
-                
+                 
+                VStack(alignment: .leading, spacing: 0) {
                 Text("January 5 2022")
                     .font(.custom("Arial", size: 32))
                     .fontWeight(.bold)
                     .foregroundColor(Color.gray)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .offset(x: 0, y: -350)
                 
-                SearchView(searchTerm: $searchTerm)
-                    .offset(x: 0, y: -300)
+                SearchView(searchTerm: $stockListVM.searchTerm)
+                    
+                StockListView(stocks: stockListVM.stocks)
+                }
             }
                 .navigationTitle("Stocks")
         }
