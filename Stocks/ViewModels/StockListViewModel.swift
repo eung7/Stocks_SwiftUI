@@ -7,10 +7,21 @@
 
 import Foundation
 
-class StockListViewModel {
+class StockListViewModel: ObservableObject {
     var searchTerm: String = ""
-    var stocks = [StockViewModel]()
+    @Published var stocks = [StockViewModel]()
     
+    func load() {
+        fetchStocks()
+    }
+    
+    private func fetchStocks() {
+        WebService().getStocks { stocks in
+            DispatchQueue.main.async {
+                self.stocks = stocks.map { StockViewModel(stock: $0) }
+            }
+        }
+    }
 }
 
 struct StockViewModel {
