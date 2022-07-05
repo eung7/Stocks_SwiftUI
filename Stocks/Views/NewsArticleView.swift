@@ -10,23 +10,36 @@ import URLImage
 
 struct NewsArticleView: View {
     let newsArticles: [NewsArticleViewModel]
+    let onDragBegin: (DragGesture.Value) -> Void
+    let onDragEnd: (DragGesture.Value) -> Void
     
     var body: some View {
         let screenSize = UIScreen.main.bounds.size
         
         return VStack(alignment: .leading) {
-            VStack(alignment: .leading) {
-                Text("Top News")
-                    .foregroundColor(Color.white)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(2)
-                
-                Text("From Apple News")
-                    .foregroundColor(Color.gray)
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .padding(2)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Top News")
+                        .foregroundColor(Color.white)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(2)
+                    
+                    Text("From Apple News")
+                        .foregroundColor(Color.gray)
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .padding(2)
+                }
+                Spacer()
+            }
+            .padding()
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture()
+                    .onChanged(onDragBegin)
+                    .onEnded(onDragEnd))
                 
                 ScrollView {
                     VStack {
@@ -51,8 +64,6 @@ struct NewsArticleView: View {
                         }
                     }.frame(maxWidth: .infinity)
                 }
-                
-            }
         }
         .frame(width: screenSize.width, height: screenSize.height)
         .edgesIgnoringSafeArea(.bottom)
@@ -63,6 +74,10 @@ struct NewsArticleView: View {
 
 struct NewsArticleView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsArticleView(newsArticles: [])
+        NewsArticleView(
+            newsArticles: [],
+            onDragBegin: { _ in },
+            onDragEnd: { _ in }
+        )
     }
 }

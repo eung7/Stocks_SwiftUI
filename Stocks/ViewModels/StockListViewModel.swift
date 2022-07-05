@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 class StockListViewModel: ObservableObject {
+    @Published var dragOffset: CGSize = CGSize(width: 0, height: 750)
     @Published var searchTerm: String = ""
     @Published var stocks = [StockViewModel]()
     @Published var news = [NewsArticleViewModel]()
