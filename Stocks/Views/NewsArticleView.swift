@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct NewsArticleView: View {
     let newsArticles: [NewsArticleViewModel]
@@ -41,8 +42,11 @@ struct NewsArticleView: View {
                                         .font(.custom("Arial", size: 22))
                                         .foregroundColor(Color.white)
                                 }
-                                
                                 Spacer()
+                                
+                                URLImage(URL(string: article.imageURL)!,
+                                         content: { $0.resizable() })
+                                .frame(width: 100, height: 100)
                             }
                         }
                     }.frame(maxWidth: .infinity)
