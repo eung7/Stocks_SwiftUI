@@ -29,20 +29,25 @@ struct ContentView: View {
             ZStack(alignment: .leading) {
                 Color.black
                     .edgesIgnoringSafeArea(.all)
-                 
-                VStack(alignment: .leading, spacing: 0) {
+                
                 Text("January 5 2022")
                     .font(.custom("Arial", size: 32))
                     .fontWeight(.bold)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color.white)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .offset(x: 0, y: -350)
                 
                 SearchView(searchTerm: $stockListVM.searchTerm)
-                    
+                    .offset(x: 0, y: -300)
+                
                 StockListView(stocks: filteredStocks)
-                }
+                    .offset(x: 0, y: 200)
+                
+                NewsArticleView(newsArticles: stockListVM.news)
+                    .offset(x: 0, y: 500)
             }
-                .navigationTitle("Stocks")
+            .edgesIgnoringSafeArea(.bottom)
+            .navigationTitle("Stocks")
         }
     }
 }
